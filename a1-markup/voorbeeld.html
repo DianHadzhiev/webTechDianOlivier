@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="site_nav" aria-label="Page navigation">
+    <ul class="nav_list">
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#album">Album table</a></li>
+      <li><a href="#notes">Notes</a></li>
+
+    </ul>
+  </nav>
+
+  <header class="page_header">
+    <h1 id="overview">Favorite Media Album</h1>
+    <p class="intro">
+      A small online album of media I enjoyed most. Built with pure HTML5 + CSS (no scripts).
+      Special characters example: &copy; &amp; &ndash; &ldquo;favorites&rdquo;.
+    </p>
+  </header>
+
+  <main>
+    <section class="section_block">
+      <h2>What this page contains</h2>
+      <p>
+        This page demonstrates multiple HTML constructs required by the assignment. It also includes a table that
+        lists media posters and metadata, plus an interactive form as the last row to add a new item.
+      </p>
+
+      <div class="lists_wrap">
+        <section class="list_block">
+          <h2>Top picks (unordered)</h2>
+          <ul class="media_ul">
+            <li><strong>Arcane</strong> &mdash; animated drama</li>
+            <li><strong>Interstellar</strong> &mdash; sci-fi film</li>
+            <li><strong>The Witcher 3</strong> &mdash; RPG game</li>
+          </ul>
+        </section>
+
+        <section class="list_block">
+          <h2>Rewatch / replay priority (ordered)</h2>
+          <ol class="media_ol">
+            <li>Arcane</li>
+            <li>Interstellar</li>
+            <li>The Witcher 3</li>
+          </ol>
+        </section>
+
+        <section class="list_block">
+          <h2>Glossary (definition list)</h2>
+          <dl class="media_dl">
+            <dt><abbr title="Role-Playing Game">RPG</abbr></dt>
+            <dd>A game genre focused on character progression and story.</dd>
+            <dt><abbr title="Science Fiction">Sci-Fi</abbr></dt>
+            <dd>Fiction that explores speculative science and technology.</dd>
+            <dt><abbr title="Television Show">TV</abbr></dt>
+            <dd>Serialized video content, often episodic.</dd>
+          </dl>
+        </section>
+      </div>
+    </section>
+
+    <section class="section_block" id="album">
+      <h2>Album table</h2>
+
+      <figure class="hero_figure favorite">
+        <img
+          class="hero_image"
+          src="https://pbs.twimg.com/media/GcMIc3WXcAI_MNJ?format=jpg&name=small"
+          alt="Arcane promotional poster"
+        >
+        <figcaption class="hero_caption">
+          A representative poster image from the web. (Example of <code>figure</code>, <code>img</code>, <code>figcaption</code>)
+        </figcaption>
+      </figure>
+
+      <table class="media_table">
+        <caption class="table_caption">Favorite media overview (images + metadata)</caption>
+
+        <tr>
+          <th scope="col">poster</th>
+          <th scope="col">name</th>
+          <th scope="col">year</th>
+          <th scope="col">genre</th>
+          <th scope="col">description</th>
+        </tr>
+
+        <tr>
+          <td class="poster_cell">
+            <img
+              class="poster_img favorite"
+              src="https://pbs.twimg.com/media/GcMIc3WXcAI_MNJ?format=jpg&name=small"
+              alt="Arcane poster"
+            >
+          </td>
+          <td>Arcane</td>
+          <td>2021</td>
+          <td>animation, action, adventure, tv-show</td>
+          <td class="desc_cell">
+            Set in Utopian Piltover and the oppressed underground of Zaun, the story follows the origins of two iconic
+            League of Legends champions and the power that will tear them apart.
+          </td>
+        </tr>
+
+        <tr>
+          <td class="poster_cell">
+            <img
+              class="poster_img"
+              src="https://upload.wikimedia.org/wikipedia/en/b/bc/Interstellar_film_poster.jpg"
+              alt="Interstellar film poster"
+            >
+          </td>
+          <td>Interstellar</td>
+          <td>2014</td>
+          <td>science fiction, drama, adventure, film</td>
+          <td class="desc_cell">
+            A team travels through a wormhole in space in an attempt to ensure humanity&rsquo;s survival, exploring time,
+            gravity, and sacrifice.
+          </td>
+        </tr>
+
+        <tr>
+          <td class="poster_cell">
+            <img
+              class="poster_img"
+              src="https://upload.wikimedia.org/wikipedia/en/0/0c/Witcher_3_cover_art.jpg"
+              alt="The Witcher 3 cover art"
+            >
+          </td>
+          <td>The Witcher 3: Wild Hunt</td>
+          <td>2015</td>
+          <td>rpg, open world, fantasy, game</td>
+          <td class="desc_cell">
+            A story-driven open world RPG set in a dark fantasy universe, filled with meaningful choices and impactful
+            quests.
+          </td>
+        </tr>
+
+        <!-- LAST ROW: form inputs that POST to the course API -->
+        <tr class="form_row">
+          <td colspan="5">
+            <form class="add_form" action="https://webtech.labs.vu.nl/api26/????????" method="post">
+              <fieldset class="form_fieldset">
+                <legend class="form_legend">Add a new media item</legend>
+
+                <div class="form_grid">
+                  <div class="form_item">
+                    <label for="poster">Poster URL</label>
+                    <input
+                      id="poster"
+                      name="poster"
+                      type="url"
+                      required
+                      placeholder="https://example.com/poster.jpg"
+                    >
+                  </div>
+
+                  <div class="form_item">
+                    <label for="name">Name</label>
+                    <input
+                      id="name"
+                      name="name"
+                      type="text"
+                      required
+                      maxlength="80"
+                      placeholder="Media title"
+                    >
+                  </div>
+
+                  <div class="form_item">
+                    <label for="year">Year</label>
+                    <input
+                      id="year"
+                      name="year"
+                      type="number"
+                      required
+                      min="1800"
+                      max="2100"
+                      placeholder="2021"
+                    >
+                  </div>
+
+                  <div class="form_item">
+                    <label for="genre">Genre (comma-separated)</label>
+                    <input
+                      id="genre"
+                      name="genre"
+                      type="text"
+                      required
+                      placeholder="action, adventure"
+                    >
+                  </div>
+
+                  <div class="form_item form_item_full">
+                    <label for="description">Description</label>
+                    <input
+                      id="description"
+                      name="description"
+                      type="text"
+                      required
+                      placeholder="A longer description..."
+                    >
+                  </div>
+
+                  <div class="form_item form_actions">
+                    <input class="btn_primary" type="submit" value="Add to album">
+                    <input class="btn_secondary" type="reset" value="Reset">
+                  </div>
+                </div>
+              </fieldset>
+
+              <p class="form_help">
+                Tip: use a direct image URL that ends with <em>.jpg</em>, <em>.png</em>, or similar. The server will
+                validate that your fields match the column names.
+              </p>
+            </form>
+          </td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="section_block" id="notes">
+      <h2>Notes &amp; markup demo</h2>
+      <p class="target_audience">
+        Target audience: people who like quick overviews of media recommendations.
+      </p>
+
+      <p>
+        Below is a small <strong>preformatted</strong> snippet showing what the POST data looks like when submitting:
+      </p>
+
+      <pre class="code_block">
+poster=https://example.com/poster.jpg
+name=Example Title
+year=2026
+genre=example, demo
+description=This is a longer text describing the media.</pre>
+
+      <p>
+        Jump back to the <a href="#overview">top of the page</a>.
+      </p>
+    </section>
+  </main>
+
+  <footer class="page_footer">
+    <p>&copy; 2026 My Album. Built for WebTech Assignment 1.</p>
+  </footer>
+</body>
+</html><body>
+
+    <table>
+
+
+    </table>
+</body>
+</html>
