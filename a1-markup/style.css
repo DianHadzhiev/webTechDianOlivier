@@ -301,6 +301,20 @@ ol li {
 
 /* css adjustments for smaller screens like phones*/
 @media screen and (max-width: 600px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  main {
+    padding: 0 0.5rem;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .nav {
+    width: 100%;
+    box-sizing: border-box;
+  }
   .nav-list {
     display: flex;
     flex-direction: column;
