@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class = "nav">
+        <ul class="nav-list">
+            <li><a href="#album">Album table</a></li>
+            <li><a href="#notes">Notes</a></li>
+        </ul>
+
+        
+    </nav>   
+    <header class="head">
+        <h1 id="overview">Favorite games album</h1>
+        <h2 class="intro">
+            Album with information about our favorite games
+        </h2>
+    </header>
+
+    <main>
+        <section id="album" class="album">
+            <table class="media-table">
+                <caption class="table_caption">Favorite games overview</caption>
+                <thead class="information-row">
+                    <tr>
+                        <th scope="col">cover art</th>
+                        <th scope="col">name</th>
+                        <th scope="col">year</th>
+                        <th scope="col">genre</th>
+                        <th scope="col">description</th>
+                    </tr> 
+                </thead>
+
+                <tr>
+                    <td class="Cover-art">
+                        <img class="cover-img" src="https://m.media-amazon.com/images/M/MV5BMTZlMmIxM2EtN2Y4Zi00M2ZhLTk3NzgtNjJmZTU0MTQ3YjcwXkEyXkFqcGc@._V1_.jpg" alt="Fortnite cover">
+                    </td>
+                    <td>Fortnite</td>
+                    <td>2017</td>
+                    <td>Battle royale</td>
+                    <td class="desc">A cooperative shooter-survival game for up to four players to fight off zombie-like husks, defend objects with fortifications you can build, and a battle royale mode where up to 100 players fight to be the last person standin</td>
+
+                </tr>
+
+                <tr>
+                    <td class="Cover-art">
+                        <img class="cover-img" src="https://assets.2k.com/1a6ngf98576c/3tOvp3jUZGhprJUWHI5nKD/ddb1305fa8362c73fc7f0df0dbb0f911/NBA26_Superstar_FOB_425x535.png" alt="2k26 cover">
+
+                    </td>
+                    <td>NBA 2K26</td>
+                    <td>2025</td>
+                    <td>Sports</td>
+                    <td class="desc">Bragging rights are on the line in MyCAREER, MyTEAM, MyNBA, The W, and Play Now. Showcase your bag of moves with hyper realism, Powered by ProPLAY™, and challenge your friends, or rivals, in NBA 2K26's competitive modes—and leave no doubt that you wear the crown.</td>
+
+                </tr>
+                <tr>
+                    <td class="Cover-art">
+                    <img class="cover-img" src="https://upload.wikimedia.org/wikipedia/en/4/47/Tom_Clancy%27s_Rainbow_Six_Siege_cover_art.jpg" alt="r6 cover">
+                    </td>
+                    <td>Tom Clancy's Rainbow Six Siege</td>
+                    <td>2015</td>
+                    <td>Shooter</td>
+                    <td class="desc">Rainbow Six Siege X is the reference in tactical team shooters, where elite strategy and execution triumph. Enjoy free access to Quick Match, Unranked and Dual Front game modes with a selection of operators.</td>
+
+                </tr>
+
+                <tr>
+                    <td class="Cover-art">
+                    <img class="cover-img" src="https://preview.redd.it/which-one-is-the-superior-cover-art-v0-cr3lvy59zu3d1.png?width=640&crop=smart&auto=webp&s=734616f4bb921d1bf9e27d363977cbed1f5c0ee4" alt="Minecraft cover" >
+                    </td>
+                    <td>Minecraft</td>
+                    <td>2009</td>
+                    <td>Sandbox</td>
+                    <td class="desc">Minecraft is a sandbox game developed and published by Mojang Studios. Formally released on 18 November 2011 for personal computers following its initial public alpha release on 17 May 2009, it has been ported to numerous platforms, including mobile devices and various video game consoles.</td>
+
+                </tr>
+                <tr>
+                    <td class="Cover-art">
+                    <img class="cover-img" src="https://media.rockstargames.com/rockstargames/img/global/news/upload/actual_1364906194.jpg" alt="Gta cover" >
+                    </td>
+                    <td>Grand theft auto V</td>
+                    <td>2013</td>
+                    <td>Action</td>
+                    <td class="desc">Grand Theft Auto V is a 2013 action-adventure game developed by Rockstar North and published by Rockstar Games. It is the seventh main entry in the Grand Theft Auto series, following 2008's Grand Theft Auto IV, and the fifteenth instalment overall.</td>
+
+                </tr>
+
+                
+            </table>
+
+        </section>
+        <div class="NewMedia">
+            <h3>Add a new media item</h3>
+        </div>
+            
+        
+        <form action="https://webtech.labs.vu.nl/api26/0ce945cd" method="post">
+        
+            <div class="form_item">
+                <label for="poster">Poster art URL</label>
+                <input id="poster" name="poster" type="url" required placeholder="https://example.com/poster.jpg">
+            </div>
+            <div class="form_item">
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" required placeholder="Media title">
+            </div>
+
+            <div class="form_item">
+                <label for="year">Year</label>
+                <input id="year" name="year" type="number" required min="1900" max="2027" placeholder="2020">
+            </div>
+        
+            <div class="form_item">
+                <label for="genre">Genre</label>
+                <input id="genre" name="genre" type="text" required placeholder="action, adventure">
+            </div>
+            <div class="form_item">
+                <label for="description">Description</label>
+                <input id="description" name="description" type="text" required placeholder="A longer description...">
+            </div>
+            <div class="form_actions">
+                <input class="btn_primary" type="submit" value="Add to album">
+                <input class="btn_secondary" type="reset" value="Reset">
+            </div>
+            <p class="form_help">
+                Tip: use a direct image URL that ends with <em>.jpg</em>, <em>.png</em>, or similar. <strong>The server will
+                validate that your fields match the column names.</strong>
+            </p>
+            <h3>Example input:</h3>
+            <pre>
+                
+                poster=https://example.com/image.jpg
+                name=Minecraft
+                year=2009
+                genre=Sandbox
+                description=Minecraft is a sandbox game...
+            </pre>
+        </form>
+
+        <section class="game-Facts">
+            <h2>Game Statistics</h2>
+            
+            <div class="stats-container">
+                <h3>Fortnite</h3>
+                <dl class="game-details">
+                    <dt>Monthly Active Players</dt>
+                    <dd>Over 230 million</dd>
+                    
+                </dl>
+
+                <h3>Grand Theft Auto V</h3>
+                <dl class="game-details">
+                    <dt>Total Sales</dt>
+                    <dd>Over 200 million copies</dd>
+                
+                </dl>
+
+                <h3>Rainbow Six Siege</h3>
+                <dl class="game-details">
+                    <dt>Registered Players</dt>
+                    <dd>Over 85 million</dd>
+                    
+                    <dt>Operators</dt>
+                    <dd>70+ unique operators</dd>
+                </dl>
+
+            </div>
+        </section>
+
+    
+        <h2 id="notes">Our Favourite Games</h1>
+        <ul class="square-list">
+            <li class="top">Dian's top 3:
+                <ol type="1">
+                    <li><a href="https://nba.2k.com/2k26/">2K</a></li>
+                    <li><a href="https://www.fortnite.com/">Fortnite</a></li>
+                    <li><a href="https://www.ubisoft.com/en-gb/game/rainbow-six/siege">Rainbow Six: Siege</a></li>
+                </ol>
+            </li>
+        </ul>
+        <ul style="list-style-type:square">
+            <li class="top">Olivier's top 3:
+                <ol type="1">
+                    <li><a href="https://www.rockstargames.com/gta-v">Grand Theft Auto 5</a></li> 
+                    <li><a href="https://www.fortnite.com/">Fortnite</a></li>
+                    <li><a href="https://www.minecraft.net/nl-nl">Minecraft</a></li>
+                </ol>
+            </li>
+        </ul>
+
+
+        <div class="Honor">
+            <h2>Honorable mention</h2>
+            <figure>
+            <img class="HonorCover" src="https://gaming-cdn.com/images/products/1744/orig/red-dead-redemption-2-xbox-one-spel-microsoft-store-europe-cover.jpg?v=1730908051" alt="Red Dead Redemption 2 cover">
+                <figcaption> <i>Red Dead Redemption 2 cover</i></figcaption>
+            </figure>    
+        </div>
+        
+        <p class="topOfpage">
+            Go back to the <a href="#overview">top of the page</a>
+        </p>
+
+        
+
+    </main>
+
+    <footer class="page_footer">
+            <div> Olivier & Dian Games album</div>
+            <div>© <abbr title="Vrije Universiteit Amsterdam">VU </abbr>Amsterdam 2026</div>
+        </footer>
+</body>
+</html>
