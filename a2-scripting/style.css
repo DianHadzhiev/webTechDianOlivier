@@ -425,7 +425,13 @@ ol li {
   }
 }
 
-
+.success-message {
+  display: none;
+  color: green;
+  font-weight: bold;
+  margin-left: 10px;
+  font-size: 14px;
+}
 
 
 
