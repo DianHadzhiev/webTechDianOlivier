@@ -1,0 +1,190 @@
+(() => {
+  "use strict";
+
+  const API_KEY = "0ce945cd";
+  const API_BASE = `https://webtech.labs.vu.nl/api26/${API_KEY}`;
+
+  const albumElement = document.getElementById("album");
+  const yearsFilter = document.getElementById("yearFilters");
+  const search = document.getElementById("searchInput");    
+  const resetBtn = document.getElementById("resetBtn");      
+  const status = document.getElementById("statusMsg");       
+
+  let items = [];
+  let selectedYear = null;
+  let searchTerm = "";
+
+  function setStatus(msg, isError = false) {
+    if (!status) return;
+    status.textContent = msg;
+    status.classList.toggle("status-error", isError);
+  }
+
+  function normalize(str) {
+    return String(str ?? "").trim().toLowerCase();
+  }
+
+  function getYears(data) {
+    const years = new Set();
+    for (const it of data) {
+      if (it && it.year !== undefined && it.year !== null) {
+        years.add(Number(it.year));
+      }
+    }
+    return Array.from(years).sort((a, b) => b - a);
+  }
+
+  function applyFilters(data) {
+    const term = normalize(searchTerm);
+
+    return data.filter((it) => {
+      const yearOk = selectedYear === null ? true : Number(it.year) === selectedYear;
+      if (!term) return yearOk;
+
+      const nameOk = normalize(it.name).includes(term);
+      const genreOk = normalize(it.genre).includes(term);
+      return yearOk && (nameOk || genreOk);
+    });
+  }
+
+  function makeYearButton(label, yearValue) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "year-btn";
+    btn.textContent = label;
+
+    const isActive = selectedYear === yearValue;
+    btn.classList.toggle("active", isActive);
+    btn.setAttribute("aria-pressed", String(isActive));
+
+    btn.addEventListener("click", () => {
+      selectedYear = selectedYear === yearValue ? null : yearValue;
+      refreshUI();
+    });
+
+    return btn;
+  }
+
+  function renderYearButtons() {
+    if (!yearsFilter) return;
+
+    const years = getYears(items);
+    yearsFilter.innerHTML = "";
+
+    yearsFilter.appendChild(makeYearButton("All", null));
+
+    for (const y of years) {
+      yearsFilter.appendChild(makeYearButton(String(y), y));
+    }
+  }
+
+  function renderCard(item) {
+    const card = document.createElement("article");
+    card.className = "media-card";
+    card.dataset.year = String(item.year ?? "");
+
+    const img = document.createElement("img");
+    img.src = item.poster;
+    img.alt = item.name ? `${item.name} poster` : "Media poster";
+    img.loading = "lazy";
+    img.className = "media-img";
+
+    const title = document.createElement("h3");
+    title.textContent = item.name ?? "Untitled";
+
+    const meta = document.createElement("p");
+    meta.textContent = `${item.year ?? "?"} • ${item.genre ?? "Unknown genre"}`;
+
+    const desc = document.createElement("p");
+    desc.textContent = item.description ?? "";
+
+    card.append(img, title, meta, desc);
+    return card;
+  }
+
+  function renderAlbum() {
+    if (!albumElement) return;
+
+    albumElement.innerHTML = "";
+    const filtered = applyFilters(items);
+
+    if (filtered.length === 0) {
+      const p = document.createElement("p");
+      p.textContent = "No items match the selected filter.";
+      albumElement.appendChild(p);
+      return;
+    }
+
+    const fragment = document.createDocumentFragment();
+    for (const item of filtered) {
+      fragment.appendChild(renderCard(item));
+    }
+    albumElement.appendChild(fragment);
+  }
+
+  function refreshUI() {
+    renderYearButtons();
+    renderAlbum();
+
+    if (selectedYear === null) {
+      setStatus("Showing all years");
+    } else {
+      setStatus(`Filtering year: ${selectedYear}`);
+    }
+  }
+
+  async function loadItems() {
+    setStatus("Loading album...");
+    try {
+      const res = await fetch(API_BASE);
+      if (!res.ok) throw new Error(`Fetch failed (${res.status})`);
+
+      const data = await res.json();
+      items = Array.isArray(data) ? data : [];
+
+      refreshUI();
+      setStatus("Album loaded");
+    } catch (err) {
+      console.error(err);
+      setStatus("Failed to load album", true);
+    }
+  }
+
+  async function resetDatabase() {
+    setStatus("Resetting database");
+    try {
+      const res = await fetch(`${API_BASE}/reset`);
+      if (!res.ok) throw new Error(`Reset failed (${res.status})`);
+
+      await loadItems(); 
+      setStatus("Database reset");
+    } catch (err) {
+      console.error(err);
+      setStatus("Failed to reset database", true);
+    }
+  }
+
+  function wireEvents() {
+    if (search) {
+      search.addEventListener("input", (e) => {
+        searchTerm = e.target.value;
+        refreshUI();
+      });
+    }
+
+    if (resetBtn) {
+      resetBtn.addEventListener("click", resetDatabase);
+    }
+  }
+
+  function init() {
+    wireEvents();
+    loadItems();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
