@@ -1,30 +1,32 @@
+import MicroModal from "micromodal";
 (() => {
   "use strict";
 
   const API_KEY = "0ce945cd";
   const API_BASE = `https://webtech.labs.vu.nl/api26/${API_KEY}`;
 
-  const albumElement = document.getElementById("album");
-  const yearsFilter = document.getElementById("yearFilters");
-  const search = document.getElementById("searchInput");    
-  const resetBtn = document.getElementById("resetBtn");      
-  const status = document.getElementById("statusMsg");       
+  const albumElement = document.getElementById("album");        
+  const yearsFilter = document.getElementById("yearFilters");  
+  const searchInput = document.getElementById("searchInput");   
+  const resetBtn = document.getElementById("resetBtn");         
+  const statusMsg = document.getElementById("statusMsg");       
 
+ 
   let items = [];
   let selectedYear = null;
   let searchTerm = "";
 
   function setStatus(msg, isError = false) {
-    if (!status) return;
-    status.textContent = msg;
-    status.classList.toggle("status-error", isError);
+    if (!statusMsg) return;
+    statusMsg.textContent = msg;
+    statusMsg.classList.toggle("status-error", isError);
   }
 
   function normalize(str) {
     return String(str ?? "").trim().toLowerCase();
   }
 
-  function getYears(data) {
+  function getUniqueYears(data) {
     const years = new Set();
     for (const it of data) {
       if (it && it.year !== undefined && it.year !== null) {
@@ -58,7 +60,7 @@
     btn.setAttribute("aria-pressed", String(isActive));
 
     btn.addEventListener("click", () => {
-      selectedYear = selectedYear === yearValue ? null : yearValue;
+      selectedYear = (selectedYear === yearValue) ? null : yearValue;
       refreshUI();
     });
 
@@ -68,11 +70,10 @@
   function renderYearButtons() {
     if (!yearsFilter) return;
 
-    const years = getYears(items);
+    const years = getUniqueYears(items);
     yearsFilter.innerHTML = "";
 
     yearsFilter.appendChild(makeYearButton("All", null));
-
     for (const y of years) {
       yearsFilter.appendChild(makeYearButton(String(y), y));
     }
@@ -84,18 +85,21 @@
     card.dataset.year = String(item.year ?? "");
 
     const img = document.createElement("img");
+    img.className = "media-img";
     img.src = item.poster;
     img.alt = item.name ? `${item.name} poster` : "Media poster";
     img.loading = "lazy";
-    img.className = "media-img";
 
     const title = document.createElement("h3");
+    title.className = "media-title";
     title.textContent = item.name ?? "Untitled";
 
     const meta = document.createElement("p");
+    meta.className = "media-meta";
     meta.textContent = `${item.year ?? "?"} • ${item.genre ?? "Unknown genre"}`;
 
     const desc = document.createElement("p");
+    desc.className = "media-desc";
     desc.textContent = item.description ?? "";
 
     card.append(img, title, meta, desc);
@@ -137,7 +141,7 @@
     setStatus("Loading album...");
     try {
       const res = await fetch(API_BASE);
-      if (!res.ok) throw new Error(`Fetch failed (${res.status})`);
+      if (!res.ok) throw new Error(`GET failed (${res.status})`);
 
       const data = await res.json();
       items = Array.isArray(data) ? data : [];
@@ -151,22 +155,38 @@
   }
 
   async function resetDatabase() {
-    setStatus("Resetting database");
+    setStatus("Resetting database...");
     try {
       const res = await fetch(`${API_BASE}/reset`);
-      if (!res.ok) throw new Error(`Reset failed (${res.status})`);
+      if (!res.ok) throw new Error(`RESET failed (${res.status})`);
 
-      await loadItems(); 
+      await loadItems();
       setStatus("Database reset");
     } catch (err) {
       console.error(err);
       setStatus("Failed to reset database", true);
     }
   }
+  
+    async function postNewItem(payload) {
+        setStatus("Adding item...");
+        const res = await fetch(API_BASE, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        });
 
+        if (!res.ok) {
+        throw new Error(`POST failed (${res.status})`);
+        }
+
+        // Some APIs return JSON, some return empty. Don’t depend on it.
+        // Re-fetch is the most reliable.
+        await loadItems();
+    }
   function wireEvents() {
-    if (search) {
-      search.addEventListener("input", (e) => {
+    if (searchInput) {
+      searchInput.addEventListener("input", (e) => {
         searchTerm = e.target.value;
         refreshUI();
       });

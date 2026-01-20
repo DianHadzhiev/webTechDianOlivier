@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
-    <script src="app.js" async></script>
+    <script src="dist/script.js" async></script>
 </head>
 <body>
     <nav class = "nav">
@@ -43,9 +43,9 @@
         <div class="NewMedia">
             <h3>Add a new media item</h3>
         </div>
-            
+            <!--action="https://webtech.labs.vu.nl/api26/0ce945cd" method="post"-->
         
-        <form action="https://webtech.labs.vu.nl/api26/0ce945cd" method="post">
+        <form id="media-form">
         
             <div class="form_item">
                 <label for="poster">Poster art URL</label>
@@ -72,11 +72,13 @@
             <div class="form_actions">
                 <input class="btn_primary" type="submit" value="Add to album">
                 <input class="btn_secondary" type="reset" value="Reset">
+                <span class="success-message">Game succesfully added!</span>
             </div>
             <p class="form_help">
                 Tip: use a direct image URL that ends with <em>.jpg</em>, <em>.png</em>, or similar. <strong>The server will
                 validate that your fields match the column names.</strong>
             </p>
+
             <h3>Example input:</h3>
             <pre>
                 
