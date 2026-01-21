@@ -76,12 +76,19 @@ h1 {
   margin: 0 10px 15px 10px;
 }
 
-.year-filters {
+.filters{
+  display: grid;
+  justify-content: center;
+  justify-items: start;
+}
+
+.yearFilters {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
   align-items: center;
-  margin: 0.75rem 0;
+  margin-right: 12px;
+  margin-bottom: 10px;
 }
 
 .year-btn {
@@ -109,18 +116,28 @@ h1 {
   font-weight: bold;
 }
 
-#searchInput {
-  width: 100%;
-  max-width: 420px;
-  background-color: #3a3a3a;
-  color: white;
-  padding: 10px 12px;
-  border: 1px solid #505050;
-  border-radius: 8px;
-  font-size: 14px;
+.search-label {
+  display: block;
+  margin-top: 8px;
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #ffffff;
 }
 
-#searchInput:focus {
+#searchInput {
+  width: 100%;
+  max-width: 480px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #444;
+  background-color: #2f2f2f;
+  color: #ffffff;
+  font-size: 1rem;
+  box-sizing: border-box;
+  margin-bottom: 5px;
+}
+
+.searchInput:focus {
   outline: none;
   border-color: #0077cc;
 }
@@ -137,17 +154,19 @@ h1 {
 
 .album {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  grid-template-columns: repeat(auto-fill, 300px);
   gap: 1rem;
+  justify-content: center;
   margin: 0 10px 20px 10px;
 }
 
+
 .media-card {
+  width: 280px;
   background-color: #2b2b2b;
   border: 1px solid #505050;
   border-radius: 12px;
   padding: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
 }
 
 .media-img {
@@ -380,10 +399,8 @@ ol li {
     gap: 10px;
     text-align: center;
   }
+  
 
-  #searchInput {
-    max-width: 100%;
-  }
 }
 
 @media screen and (min-width: 601px) and (max-width: 900px) {
