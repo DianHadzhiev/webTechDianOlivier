@@ -1,121 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" async ></script>
-</head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
+  <script src="script.js" async></script>
+  </head>
 <body>
-    <nav class = "nav">
-        <ul class="nav-list">
-            <li><a href="#album">Album table</a></li>
-            <li><a href="#notes">Notes</a></li>
-        </ul>
+<nav class="nav">
+    <ul class="nav-list">
+    <li><a href="#album">Album table</a></li>
+    <li><a href="#notes">Notes</a></li>
+    </ul>
+</nav>
 
-        
-    </nav>   
-    <header class="head">
-        <h1 id="overview">Favorite games album</h1>
-        <h2 class="intro">
-            Album with information about our favorite games
-        </h2>
-    </header>
+<header class="head">
+<h1 id="overview">Favorite media album</h1>
+<h2 class="intro">Album with information about our favorite games</h2>
+</header>
 
-    <main>
-        <section class="controls" aria-label="Album controls">
-            <div class="filters">
-                <label class="search-label" for="searchInput">Search by name or genre</label>
-                <input id="searchInput" type="text" placeholder="e.g. action, minecraft" />
-                <button id="resetBtn" type="button" class="btn_secondary">Reset database</button>
-                <p id="statusMsg" aria-live="polite" class="status"></p>
-                <div id="yearFilters" class="yearFilters"aria-label="Filter by year"></div>
-            </div>
-        </section>
-        <section id="album" class="album" aria-label="Media gallery"></section>
-        
+  <main>
+    <section class="controls" aria-label="Album controls">
+      <div class="filters">
+        <label class="search-label" for="searchInput">Search by name or genre</label>
+        <input id="searchInput" type="text" placeholder="e.g. action, minecraft" />
 
+        <button id="open-form-btn" type="button" class="btn_primary">Add a new media item</button>
+        <button id="resetBtn" type="button" class="btn_secondary">Reset database</button>
 
-        <div class="NewMedia">
-            <h3>Add a new media item</h3>
-        </div>
-            <!--action="https://webtech.labs.vu.nl/api26/0ce945cd" method="post"-->
-        
-        <form id="mediaForm">
-        
-            <div class="form_item">
+        <p id="statusMsg" aria-live="polite" class="status"></p>
+        <div id="yearFilters" class="yearFilters" aria-label="Filter by year"></div>
+      </div>
+    </section>
+
+    <section id="album" class="album" aria-label="Media gallery"></section>
+
+    <div class="modal micromodal-slide" id="image-form-modal" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-title">Add a new media item</h2>
+            <button class="modal__close" type="button" aria-label="Close" data-micromodal-close></button>
+          </header>
+
+          <div class="modal__content" id="image-form-content">
+            <form id="mediaForm">
+              <div class="form_item">
                 <label for="poster">Poster art URL</label>
-                <input id="poster" name="poster" type="url" required placeholder="https://example.com/poster.jpg">
-            </div>
-            <div class="form_item">
+                <input id="poster" name="poster" type="url" required placeholder="https://example.com/poster.jpg" />
+              </div>
+
+              <div class="form_item">
                 <label for="name">Name</label>
-                <input id="name" name="name" type="text" required placeholder="Media title">
-            </div>
+                <input id="name" name="name" type="text" required placeholder="Media title" />
+              </div>
 
-            <div class="form_item">
+              <div class="form_item">
                 <label for="year">Year</label>
-                <input id="year" name="year" type="number" required min="1900" max="2027" placeholder="2020">
-            </div>
-        
-            <div class="form_item">
-                <label for="genre">Genre</label>
-                <input id="genre" name="genre" type="text" required placeholder="action, adventure">
-            </div>
-            <div class="form_item">
-                <label for="description">Description</label>
-                <input id="description" name="description" type="text" required placeholder="A longer description...">
-            </div>
-            <div class="form_actions">
-                <input class="btn_primary" type="submit" value="Add to album">
-                <input class="btn_secondary" type="reset" value="Reset">
-                <span class="success-message">Game succesfully added!</span>
-            </div>
-            <p class="form_help">
-                Tip: use a direct image URL that ends with <em>.jpg</em>, <em>.png</em>, or similar. <strong>The server will
-                validate that your fields match the column names.</strong>
-            </p>
+                <input id="year" name="year" type="number" required min="1900" max="2027" placeholder="2020" />
+              </div>
 
-            <h3>Example input:</h3>
-            <pre>
-                
+              <div class="form_item">
+                <label for="genre">Genre</label>
+                <input id="genre" name="genre" type="text" required placeholder="action, adventure" />
+              </div>
+
+              <div class="form_item">
+                <label for="description">Description</label>
+                <input id="description" name="description" type="text" required placeholder="A longer description..." />
+              </div>
+
+              <div class="form_actions">
+                <input class="btn_primary" type="submit" value="Add to album" />
+                <input class="btn_secondary" type="reset" value="Reset" />
+                <span class="success-message">Game succesfully added!</span>
+              </div>
+
+              <p class="form_help">
+                Tip: use a direct image URL that ends with <em>.jpg</em>, <em>.png</em>, or similar.
+              </p>
+
+              <h3>Example input:</h3>
+              <pre>
                 poster=https://example.com/image.jpg
                 name=Minecraft
                 year=2009
                 genre=Sandbox
                 description=Minecraft is a sandbox game...
-            </pre>
-        </form>
-
-        <section class="game-Facts">
-            <h2>Game Statistics</h2>
-            
-            <div class="stats-container">
-                <h3>Fortnite</h3>
-                <dl class="game-details">
-                    <dt>Monthly Active Players</dt>
-                    <dd>Over 230 million</dd>
-                    
-                </dl>
-
-                <h3>Grand Theft Auto V</h3>
-                <dl class="game-details">
-                    <dt>Total Sales</dt>
-                    <dd>Over 200 million copies</dd>
-                
-                </dl>
-
-                <h3>Rainbow Six Siege</h3>
-                <dl class="game-details">
-                    <dt>Registered Players</dt>
-                    <dd>Over 85 million</dd>
-                    
-                    <dt>Operators</dt>
-                    <dd>70+ unique operators</dd>
-                </dl>
-
-            </div>
-        </section>
+              </pre>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
     
         <h2 id="notes">Our Favourite Games</h1>
@@ -138,7 +118,6 @@
             </li>
         </ul>
 
-
         <div class="Honor">
             <h2>Honorable mention</h2>
             <figure>
@@ -150,8 +129,6 @@
         <p class="topOfpage">
             Go back to the <a href="#overview">top of the page</a>
         </p>
-
-
     </main>
 
     <footer class="page_footer">

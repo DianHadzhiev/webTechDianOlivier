@@ -182,7 +182,7 @@
 
     if (!res.ok) throw new Error(`POST failed (${res.status})`);
 
-    await loadItems();
+    await loadItems({silent:true});
   }
 
   function wireFormSubmit() {
@@ -214,7 +214,7 @@
         setStatus("Item added.");
 
         if (window.MicroModal && document.getElementById(MODAL_ID)) {
-          window.MicroModal.close(MODAL_ID);
+          window.MicroModal.close(MODAL_ID) ;
         }
       } catch (err) {
         console.error(err);
