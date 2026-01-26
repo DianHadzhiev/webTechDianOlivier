@@ -146,3 +146,117 @@ function my_database(filename) {
   });
   return db;
 }
+
+app.get("/media", (req, res) => {
+  db.all(
+    "SELECT id, name, year, genre, poster, description FROM media ORDER BY year DESC",
+    (err, rows) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ error: "Failed to fetch media" });
+      }
+
+      res.json(rows); 
+    }
+  );
+});
+
+app.get("/media/:id", function (req, res){
+  const id = Number(req.params.id);
+
+  if (Number.isNaN(id)) {
+    return res.status(400).json({ error: "Invalid id" });
+  }
+  
+  db.get("SELECT name, year, genre, poster, description FROM media WHERE id= ?", [id],
+    (err, row) => {
+      if(err){
+        return res.status(500).json({ error: err.message });
+      }
+      if (!row) {
+        return res.status(404).json({ error: "Media item not found" });
+      }
+      res.json(row);
+
+    }
+  )
+
+});
+
+app.put("/media/:id", function(req, res){
+  const id = Number(req.params.id);
+
+  if (Number.isNaN(id)) {
+    return res.status(400).json({ error: "Invalid id" });
+  }
+
+  const { name, year, genre, poster, description } = req.body;
+  const exists = db.get("SELECT id FROM media WHERE id =?", [id])
+  if(!exists){
+    return res.status(404).json({error: "Media not found"});
+  };
+
+  db.run(`UPDATE media
+     SET name = ?, year = ?, genre = ?, poster = ?, description = ?
+     WHERE id = ?`, [name, year, genre, poster, description, id],
+    function(err){
+      if(err){
+        console.error(err);
+        return res.status(500).json({ error: err.message });
+      }
+      res.status(200).json({updated: true});
+    })
+
+});
+
+app.post("/media", function(req, res){
+
+  const { name, year, genre, poster, description } = req.body;
+  
+  if (!name || !year || !genre || !poster || !description) {
+    return res.status(400).json({ error: "Missing required fields" });
+  }
+
+
+  db.run(`INSERT INTO media (name, year, genre, poster, description)
+                VALUES (?, ?, ?, ?, ?)`,
+  [name,year, genre, poster, description], 
+    function(err){
+      if(err){
+        console.error(err);
+        return res.status(500).json({ error: err.message });
+      }
+
+      res.status(201).json({
+        id: this.lastID,
+        name,
+        year,
+        genre,
+        poster,
+        description
+      });
+
+    });
+});
+
+app.delete("/media/:id", function(req, res) {
+  const id = Number(req.params.id);
+
+  if (Number.isNaN(id)) {
+    return res.status(400).json({ error: "Invalid id" });
+  }
+
+  db.run("DELETE FROM media WHERE id=?", [id], function(err){
+    if(err){
+        console.error(err);
+        return res.status(500).json({ error: err.message });
+      }
+
+      if (this.changes === 0){
+        return res.status(404).json({error: "Media item not found"})
+      }
+
+      return res.status(204).send();
+  });
+
+});
