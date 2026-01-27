@@ -165,7 +165,7 @@ app.get("/media/:id", function (req, res){
   const id = Number(req.params.id);
 
   if (Number.isNaN(id)) {
-    return res.status(400).json({ error: "Invalid id" });
+    return res.status(400).json({ error: "ID is not a number" });
   }
   
   db.get("SELECT name, year, genre, poster, description FROM media WHERE id= ?", [id],
@@ -187,7 +187,7 @@ app.put("/media/:id", function(req, res){
   const id = Number(req.params.id);
 
   if (Number.isNaN(id)) {
-    return res.status(400).json({ error: "Invalid id" });
+    return res.status(400).json({ error: "ID is not a number" });
   }
 
   const { name, year, genre, poster, description } = req.body;
@@ -243,7 +243,7 @@ app.delete("/media/:id", function(req, res) {
   const id = Number(req.params.id);
 
   if (Number.isNaN(id)) {
-    return res.status(400).json({ error: "Invalid id" });
+    return res.status(400).json({ error: "ID is not a number" });
   }
 
   db.run("DELETE FROM media WHERE id=?", [id], function(err){

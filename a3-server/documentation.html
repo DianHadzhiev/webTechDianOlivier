@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media API Documentation</title>
+    <link rel="stylesheet" href="doc-style.css">
+</head>
+<body>
+    <header>
+        <h1>Media API Documentation</h1>
+        <p>Base URL: <code>http://localhost:3000</code></p>
+    </header>
+
+    <section>
+        <h2>1. List All Media</h2>
+        <p><span class="method get">GET</span> <code>/media</code></p>
+        <p>Retrieves a list of all media items ordered by year (descending).</p>
+
+        <h4>Success Response</h4>
+        <ul>
+            <li><strong>Code:</strong> 200 OK</li>
+            <li><strong>Content:</strong> Array of Media Objects</li>
+        </ul>
+        <h4>Error Response</h4>
+        <ul>
+            <li><strong>Code:</strong> 404 NOT FOUND</li>
+            <li><strong>Message:</strong> Media item not found</li>
+        </ul>
+
+
+    </section>
+
+    <section>
+        <h2>2. Get Specific Media</h2>
+        <p><span class="method get">GET</span> <code>/media/:id</code></p>
+        <p>Retrieves details for a single media item by its unique ID.</p>
+        <h4>Path Parameters</h4>
+        <table>
+            <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+            <tr><td>id</td><td>Number</td><td>The unique id of the media item.</td></tr>
+        </table>
+        <h4>Success Respons</h4>
+        <ul>
+            <li><strong>Code:</strong> 200 OK</li>
+            <li><strong>Content:</strong> single media object</li>
+        </ul>
+        <h4>Error Responses</h4>
+        <ul>
+            <li><strong>400 Bad Request:</strong> ID is not a number.</li>
+            <li><strong>404 Not Found:</strong> Item does not exist.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>3. Create Media Item</h2>
+        <p><span class="method post">POST</span> <code>/media</code></p>
+        <p>Adds a new item to the database.</p>
+        <h4>Request Body (JSON)</h4>
+        <pre>{
+  "name": "Inception",
+  "year": 2010,
+  "genre": "Sci-Fi",
+  "poster": "url_to_image",
+  "description": "A thief who steals corporate secrets..."
+}      </pre>
+        <ul>
+            <li><strong>Code:</strong> 201 Created</li>
+            <li>Content:</li>
+        </ul>
+        <pre>
+{
+  "id: 1"  
+  "name": "Inception",
+  "year": 2010,
+  "genre": "Sci-Fi",
+  "poster": "url_to_image",
+  "description": "A thief who steals corporate secrets..."
+}  
+        </pre>
+        <h4>Error Response</h4>
+        <ul>
+            <li><strong>400 Bad Request:</strong> Missing required fields</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>4. Update Media Item</h2>
+        <p><span class="method put">PUT</span> <code>/media/:id</code></p>
+        <p>All fields must be filled in</p>
+        <h4>Success Response</h4>
+        <ul>
+            <li><strong>Code:</strong> 200 OK</li>
+        </ul>
+        <h4>Error Responses</h4>
+        <ul>
+            <li><strong>400 Bad Request:</strong> ID is not a number</li>
+            <li><strong>404 Not Found:</strong> Media not found</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>5. Delete Media Item</h2>
+        <p><span class="method delete">DELETE</span> <code>/media/:id</code></p>
+        <p>Removes a media item from the database permanently.</p>
+        <h4>Success Response</h4>
+        <ul>
+            <li><strong>Code:</strong> 204 No Content</li>
+        </ul>
+        <h4>Error Responses</h4>
+        <ul>
+            <li><strong>400 Bad Request:</strong> ID is not a number</li>
+            <li><strong>404 Not Found:</strong> Media not found</li>
+        </ul>
+    </section>
+</body>
+</html>
