@@ -155,7 +155,7 @@ app.get("/media", (req, res) => {
         console.error(err);
         return res.status(500).json({ error: "Failed to fetch media" });
       }
-
+      
       res.json(rows); 
     }
   );
